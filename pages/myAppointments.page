@@ -1,0 +1,122 @@
+<!--
+ - Created by zgonjan@algonquincollege.com on 10/03/2017 Nash Zgonjanin
+ - Algonquin College, Ottawa, Ontario,Canada
+ -->
+
+
+<apex:page id="myAppointments" controller="myAppointments_controller"
+           showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <title>my Appointments</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+
+    <body>
+
+    <!-- REQUIRED SLDS WRAPPER -->
+    <apex:slds />
+    <div class="slds-scope">
+
+        <!-- MASTHEAD -->
+        <p class="slds-text-heading--label slds-m-bottom--small">
+            <!--Salesforce Lightning Design System Visualforce Workshop-->
+        </p>
+        <!-- / MASTHEAD -->
+
+        <!-- PAGE HEADER -->
+        <div class="slds-page-header" role="banner">
+
+            <!-- LAYOUT GRID -->
+            <div class="slds-grid">
+
+                <!-- GRID COL -->
+                <div class="slds-col slds-has-flexi-truncate">
+                    <!-- HEADING AREA -->
+                    <!-- MEDIA OBJECT = FIGURE + BODY -->
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-avatar slds-avatar--large">
+                                <img src="{!myUser.FullPhotoUrl}" alt="{!myUser.Name}" />
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-text-title--caps slds-line-height--reset">Events</p>
+                            <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="My Appointments">My Appointments</h1>
+                            <p><apex:outputPanel rendered="{!if(ButtonLabel=='Current',true,false)}">
+                                History (recent first)
+                            </apex:outputPanel></p>
+                        </div>
+                    </div>
+                    <p class="slds-col">&copy; Algonquin College</p>
+                    <!-- / MEDIA OBJECT -->
+                    <!-- /HEADING AREA -->
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                    <div class="slds-button-group" role="group">
+                        <apex:form >
+                            <apex:commandButton value="{!ButtonLabel}" action="{!getmyEvents}"
+                                                style="height:28px;vertical-align: middle;padding-top: 4px; background: #8AB529;color:white;"
+                            />
+                        </apex:form>
+                        <!--<button class="slds-button slds-button&#45;&#45;neutral">
+                            {!ButtonLabel}
+                        </button>-->
+                    </div>
+                </div>
+                <!-- / ACTION BUTTONS -->
+            </div>
+            <!-- / LAYOUT GRID -->
+        </div>
+        <!-- / PAGE HEADER -->
+
+        <!-- PRIMARY CONTENT WRAPPER -->
+        <div class="myapp slds-p-horizontal--medium">
+            <ul id="contact-list" class="slds-has-dividers--bottom-space">
+                <apex:repeat value="{!myAppointments}" var="Event" >
+                <li class="slds-item">
+                <div class="slds-tile slds-media">
+                    <div class="slds-media__figure">
+                        <!--<img class="slds-avatar slds-avatar&#45;&#45;medium" src="{!URLFOR($Asset.SLDS, 'assets/images/avatar2.jpg')}" alt="" />-->
+                        <img class="slds-avatar slds-avatar--medium" src="{!Event.ProfilePhotoURL}" alt="{!Event.myEvent.Owner.Name}" />
+                    </div>
+                    <div class="slds-media__body">
+                        <h3 class="slds-truncate" title="Appointment Details"><a href="{!$Site.BaseUrl}/{!Event.myEvent.Id}" target="_blank"> {!Event.myEvent.Owner.Name} </a></h3>
+                        <div class="slds-tile__detail slds-text-body--small">
+                            <p class="slds-truncate"> {!Event.myEvent.Subject} </p>
+                            <p class="slds-truncate">
+                                <apex:outputField value="{!Event.myEvent.StartDateTime}" />
+                                <!-- This will respect time zone on user record, or format it in apex and display text in page -->
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                </li>
+                </apex:repeat>
+            </ul>
+        </div>
+        <!-- / PRIMARY CONTENT WRAPPER -->
+
+        <!-- FOOTER -->
+        <footer role="contentinfo" class="slds-p-around--large">
+            <!-- LAYOUT GRID -->
+            <div class="slds-grid slds-grid--align-spread">
+                <p class="slds-col"></p>
+                <p class="slds-col">&copy; Algonquin College</p>
+            </div>
+            <!-- / LAYOUT GRID -->
+        </footer>
+        <!-- / FOOTER -->
+
+    </div>
+    <!-- / REQUIRED SLDS WRAPPER -->
+
+</body>
+</html>
+
+    </apex:page>
